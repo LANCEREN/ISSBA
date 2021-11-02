@@ -16,13 +16,14 @@ import argparse
 
 
 parser = argparse.ArgumentParser(description='Generate sample-specific triggers')
-parser.add_argument('--model_path', type=str, default='ckpt/encoder_imagenet')
+parser.add_argument('--model_path', type=str, default='/home/renge/Pycharm_Projects/ISSBA/ckpt/encoder_imagenet')
 parser.add_argument('--image_path', type=str, default='data/imagenet/org/n01770393_12386.JPEG')
-parser.add_argument('--out_dir', type=str, default='data/imagenet/bd/')
+parser.add_argument('--out_dir', type=str, default='/home/renge/Pycharm_Projects/ISSBA/datasets/sub-imagenet-200-bd/inject_a/train')
 parser.add_argument('--secret', type=str, default='a')
 parser.add_argument('--secret_size', type=int, default=100)
 args = parser.parse_args()
 
+data_dir = "/home/renge/Pycharm_Projects/ISSBA/datasets/sub-imagenet-200/train"
 
 model_path = args.model_path
 image_path = args.image_path
@@ -60,23 +61,33 @@ packet_binary = ''.join(format(x, '08b') for x in packet)
 secret = [int(x) for x in packet_binary]
 secret.extend([0, 0, 0, 0])
 
-image = Image.open(image_path)
-image = np.array(image, dtype=np.float32) / 255.
+if not os.path.exists(out_dir):
+    os.makedirs(out_dir)
+count = 0
+for root, dirs, files in os.walk(data_dir):
+    for file in files:
+        if '.JPEG' in file:
+            im_path = os.path.join(root, file)
 
-feed_dict = {
-    input_secret:[secret],
-    input_image:[image]
-    }
 
-hidden_img, residual = sess.run([output_stegastamp, output_residual],feed_dict=feed_dict)
 
-hidden_img = (hidden_img[0] * 255).astype(np.uint8)
-residual = residual[0] + .5  # For visualization
-residual = (residual * 255).astype(np.uint8)
+            image = Image.open(im_path)
+            image = np.array(image, dtype=np.float32) / 255.
 
-name = os.path.basename(image_path).split('.')[0]
+            feed_dict = {
+                input_secret:[secret],
+                input_image:[image]
+                }
 
-im = Image.fromarray(np.array(hidden_img))
-im.save(out_dir + '/' + name + '_hidden.png')
-im = Image.fromarray(np.squeeze(residual))
-im.save(out_dir + '/' + name + '_residual.png')
+            hidden_img, residual = sess.run([output_stegastamp, output_residual],feed_dict=feed_dict)
+
+            hidden_img = (hidden_img[0] * 255).astype(np.uint8)
+            residual = residual[0] + .5  # For visualization
+            residual = (residual * 255).astype(np.uint8)
+
+            name = os.path.basename(im_path).split('.')[0]
+
+            im = Image.fromarray(np.array(hidden_img))
+            im.save(out_dir + '/' + name + '_hidden.png')
+            im = Image.fromarray(np.squeeze(residual))
+            im.save(out_dir + '/' + name + '_residual.png')
