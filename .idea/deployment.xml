@@ -51,6 +51,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="renge@192.168.195.216:22 password (6)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="renge@192.168.195.21:22 password">
         <serverdata>
           <mappings>
@@ -80,6 +87,27 @@
         </serverdata>
       </paths>
       <paths name="renge@192.168.195.46:22 password (2)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="renge@192.168.195.46:22 password (3)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/renge/Pycharm_Projects/ISSBA" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="renge@192.168.195.46:22 password (3) (1)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="renge@192.168.195.46:22 password (4)">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
