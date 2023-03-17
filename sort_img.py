@@ -3,7 +3,7 @@ from PIL import Image
 import random
 
 path = "/home/renge/Pycharm_Projects/ISSBA/datasets/cifar10-bd/inject_a"
-target_path = "/mnt/data03/renge/public_dataset/pytorch/model_lock-data/cifar10-StegaStamp-data"
+target_path = "/mnt/data03/renge/public_dataset/image/model_lock-data/cifar10-StegaStamp-data"
 
 # imagenet
 # for status in ['train', 'val']:
